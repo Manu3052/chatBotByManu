@@ -7,8 +7,29 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+django = "^5.1.3"
+black = "^24.10.0"
+pytest = "^8.3.3"
+mkdocs = "^1.6.1"
+pre-commit = "^4.0.1"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-lenght = 79
+include = '\.piy?$'
+exclude = '''
+/(
+  \.git
+ | \.hg
+ | \.mypy_cache
+ | \.tox
+ | \.venv
+ | _build
+ | buck-out
+ | build
+ )/
+'''
