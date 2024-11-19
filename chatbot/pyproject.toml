@@ -12,6 +12,14 @@ black = "^24.10.0"
 pytest = "^8.3.3"
 mkdocs = "^1.6.1"
 pre-commit = "^4.0.1"
+djangorestframework = "^3.15.2"
+django-filter = "^24.3"
+markdown = "^3.7"
+django-rest-framework = "^0.1.0"
+pytelegrambotapi = "^4.24.0"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+autoflake = "^2.3.1"
 
 
 [build-system]
@@ -19,7 +27,6 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
-line-lenght = 79
 include = '\.piy?$'
 exclude = '''
 /(
