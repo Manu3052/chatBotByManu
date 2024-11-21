@@ -5,10 +5,10 @@ from django.views.static import serve
 from rest_framework import routers
 from channels import views
 
-# from channels.views import ChannelViewSet
+from channels.views import ChannelViewSet
 
 router = routers.DefaultRouter()
-# router.register("channel", ChannelViewSet, basename="channel")
+router.register("channel", ChannelViewSet, basename="channel")
 
 
 urlpatterns = [
@@ -16,5 +16,4 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path("", include(router.urls)),
-    path('channel/', views.reply_to_message)
 ]
