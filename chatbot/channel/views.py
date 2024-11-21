@@ -7,8 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
 
-from channels.services.abstract_channel_service import AbstractChannelService
-from channels.services.channel_service import ChannelService
+from channel.services.abstract_channel_service import AbstractChannelService
+from channel.services.channel_service import ChannelService
 
 
 class ChannelViewSet(ModelViewSet):

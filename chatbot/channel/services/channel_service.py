@@ -1,8 +1,8 @@
 
-from channels.config.abstract_bot_config import AbstractBotConfig
+from channel.config.abstract_bot_config import AbstractBotConfig
 from typing import Union
-from channels.providers.telegram_provider import TelegramProvider
-from channels.services.abstract_channel_service import AbstractChannelService
+from channel.providers.telegram_provider import TelegramProvider
+from channel.services.abstract_channel_service import AbstractChannelService
 
 
 class ChannelService(AbstractChannelService):
