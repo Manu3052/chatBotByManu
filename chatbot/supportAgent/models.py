@@ -20,7 +20,7 @@ class SupportAgent(models.Model):
         """
         Overriding the save method to hash the password before saving to the database.
         """
-        if not self.pk or not self.password.startswith("pbkdf2_"):  # Ensure password is hashed only once
+        if not self.pk or not self.password.startswith("pbkdf2_"):
             self.password = make_password(self.password)
         super().save(*args, **kwargs)
 
