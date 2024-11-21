@@ -3,9 +3,9 @@ from django.urls import include, path, re_path
 from django.conf import settings
 from django.views.static import serve
 from rest_framework import routers
-from channel import views
+from chat import views
 
-from channel.views import ChannelViewSet
+from chat.views import ChannelViewSet
 
 router = routers.DefaultRouter()
 router.register("channel", ChannelViewSet, basename="channel")

@@ -7,13 +7,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import json
 
-from channel.services.abstract_channel_service import AbstractChannelService
-from channel.services.channel_service import ChannelService
+from chat.serializers.chat_serializer import ChatSerializer
+from chat.services.abstract_channel_service import AbstractChannelService
+from chat.services.channel_service import ChannelService
 
 
 class ChannelViewSet(ModelViewSet):
     permission_classes = [permissions.AllowAny]
-    serializer_class = None
+    serializer_class = ChatSerializer
     queryset = None
 
     def __init__(self, channel_service: AbstractChannelService = ChannelService(), **kwargs):
@@ -26,7 +27,7 @@ class ChannelViewSet(ModelViewSet):
         try:
             data = json.loads(request.body)
             message_text = data.get("message", {}).get("text", "")
-            
+            print(message_text)
             return Response({"message_received": message_text}, status=status.HTTP_200_OK)
         except (json.JSONDecodeError, KeyError) as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
