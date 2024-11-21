@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Message(models.Model):
     """
     A model representing a message in a chat system.

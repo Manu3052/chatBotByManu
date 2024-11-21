@@ -4,6 +4,7 @@ from django.utils import timezone
 from contact.models import Contact
 from supportAgent.models import SupportAgent
 
+
 class Chat(models.Model):
     """
     Model to store chat information.

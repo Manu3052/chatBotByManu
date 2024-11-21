@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from .models import SupportAgent
+
 
 @admin.register(SupportAgent)
 class SupportAgentAdmin(admin.ModelAdmin):

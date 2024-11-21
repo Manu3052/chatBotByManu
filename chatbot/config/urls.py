@@ -1,10 +1,10 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.conf import settings
 from django.views.static import serve
 from rest_framework import routers
-from chat import views
 
+from chat import views
 from chat.views import ChannelViewSet
 
 router = routers.DefaultRouter()

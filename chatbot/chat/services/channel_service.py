@@ -1,6 +1,7 @@
 
-from chat.providers.abstract_provider_config import AbstractProviderConfig
 from typing import Union
+
+from chat.providers.abstract_provider_config import AbstractProviderConfig
 from chat.providers.telegram_provider import TelegramProvider
 from chat.services.abstract_channel_service import AbstractChannelService
 

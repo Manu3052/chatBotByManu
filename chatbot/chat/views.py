@@ -1,11 +1,12 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework import permissions, status
+import json
+
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
-import json
+from rest_framework import permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from chat.serializers.chat_serializer import ChatSerializer
 from chat.services.abstract_channel_service import AbstractChannelService
