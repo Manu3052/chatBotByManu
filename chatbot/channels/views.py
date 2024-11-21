@@ -1,14 +1,27 @@
-import telebot
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from django.http.response import HttpResponse
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.request import Request
+from django.views.decorators.csrf import csrf_exempt
 
-TELEGRAM_API_KEY = "7914621325:AAG4Pl9ckiK7i3HhHzXUFq1Jzef9ZRBJQxI"
+from channels.services.abstract_channel_service import AbstractChannelService
+from channels.services.channel_service import ChannelService
 
-bot = telebot.TeleBot(TELEGRAM_API_KEY)
 
-@bot.message_handler(commands=["ola"])
-def responder(mensagem):
-    print(mensagem)
-    bot.reply_to(mensagem, "Olá aqui")
-
-bot.polling()
 
 # class ChannelViewSet(ModelViewSet):
+#     permission_classes = [permissions.AllowAny]
+
+#     def __init__(self, channel_service: AbstractChannelService = ChannelService(), **kwargs):
+#         super().__init__(**kwargs)
+#         self.channel_service = channel_service
+
+@csrf_exempt
+def reply_to_message(request):
+    print(request.body)
+    return HttpResponse()
