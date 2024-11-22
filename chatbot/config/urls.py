@@ -6,9 +6,13 @@ from rest_framework import routers
 
 from chat import views
 from chat.views import ChannelViewSet
+from message.views import MessageViewSet
 
 router = routers.DefaultRouter()
 router.register("channel", ChannelViewSet, basename="channel")
+router.register("message", MessageViewSet, basename="message")
+# router.register("support-agent", SupportAgentViewSet, basename="support-agent")
+# router.register("contact", ContactViewSet, basename="contact")
 
 
 urlpatterns = [

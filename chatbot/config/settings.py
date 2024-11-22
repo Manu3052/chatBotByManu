@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-cb-550q)%5r9c(lwh!2)h(as^h_9!^3=ozz3f&2wgb^uy&t&&c
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['a0f6-2804-5b8-8c29-5500-1ff-84e1-860e-d78f.ngrok-free.app']
+ALLOWED_HOSTS = ['a0f6-2804-5b8-8c29-5500-1ff-84e1-860e-d78f.ngrok-free.app', '7f97-2804-5b8-8c29-5500-d12a-69e2-501-79f5.ngrok-free.app']
 
 
 # Application definition
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "chat",
     "supportAgent",
     "contact",
+    "message"
 ]
 
 MIDDLEWARE = [

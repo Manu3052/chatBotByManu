@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from chat.models import Chat
+
 
 class Message(models.Model):
     """
@@ -15,7 +17,7 @@ class Message(models.Model):
         updated_at (datetime): The date and time when the message was last updated (optional, for edited messages).
     """
     
-    chat = models.ForeignKey('Chat', on_delete=models.CASCADE, related_name='messages', help_text="The chat to which this message belongs.")
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages', help_text="The chat to which this message belongs.")
     sender_type = models.IntegerField(
         choices=[(1, 'User'), (2, 'Bot'), (3, 'Support Agent')],
         default=1,
