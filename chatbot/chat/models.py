@@ -17,15 +17,16 @@ class Chat(models.Model):
         - service: The service used for the chat (e.g., 'telegram', 'wpp').
     """
     id = models.AutoField(primary_key=True)
+    chat_id = models.CharField(max_length=150, null=True, blank=True)
     support_agent_id = models.ForeignKey(
-        SupportAgent, on_delete=models.CASCADE, related_name='support_chats'
+        SupportAgent, on_delete=models.CASCADE, related_name='support_chats', null=True, blank=True
     )
     contact_id = models.ForeignKey(
-        Contact, on_delete=models.CASCADE, related_name='contact_chats'
+        Contact, on_delete=models.CASCADE, related_name='contact_chats', null=True, blank=True
     )
     start_time = models.DateTimeField(default=timezone.now)
     closing_time = models.DateTimeField(null=True, blank=True)
-    service = models.CharField(max_length=2, choices=[('0', 'Telegram'), ('1', 'WhatsApp')])
+    service = models.CharField(max_length=2, choices=[('0', 'Telegram'), ('1', 'Discord')])
 
     def __str__(self):
         """
