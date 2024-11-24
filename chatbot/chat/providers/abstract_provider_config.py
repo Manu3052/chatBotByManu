@@ -20,6 +20,10 @@ class AbstractProviderConfig(ABC):
     """
 
     @abstractmethod
+    def verify_existing_message(self, message: str) -> bool:
+        pass
+
+    @abstractmethod
     def verify_commands(self):
         """
         Validate and interpret commands received in the chat.

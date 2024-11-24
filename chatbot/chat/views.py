@@ -65,19 +65,17 @@ class ChannelViewSet(ModelViewSet):
             bot_validator = BotValidator()
             bot_name = bot_validator.identify_bot(request.body)
             if bot_name == 'unknown':
-                raise ValidationError("Não foi possível comunicar-se com esse bot.")
+                raise ValidationError("This bot is not supported.")
             elif bot_name == "telegram":
                 serializer_class = TelegramInputSerializer
                 serializer = serializer_class(data=data, context={"request": data})
                 serializer.is_valid(raise_exception=True)
                 chat_instance = self.channel_service.create(serializer.validated_data)
                 message_serializer_class = MessageCreateSerializer
-                data['chat'] = chat_instance
+                data['chat_id'] = chat_instance
                 message_serializer = message_serializer_class(data=data)
                 message_serializer.is_valid(raise_exception=True)
                 self.message_service.create(message_serializer.validated_data)  
-            elif bot_name == "discord":
-                pass 
             return Response({"message_received": True}, status=status.HTTP_200_OK)
         except ValidationError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

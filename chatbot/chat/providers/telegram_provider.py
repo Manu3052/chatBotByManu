@@ -63,6 +63,9 @@ class TelegramProvider(AbstractProviderConfig):
         )
         return message_obj
 
+    def verify_existing_message(self, message:str) -> bool:
+        return True
+
     def verify_commands(self):
         """
         Verifies and processes any bot commands.
@@ -72,7 +75,7 @@ class TelegramProvider(AbstractProviderConfig):
         """
         return super().verify_commands()
 
-    @BOT.message_handler()
+    @BOT.message_handler(func=verify_existing_message)
     def reply(self, message: Message, supportMessage: str):
         BOT.reply_to(message, supportMessage)
 

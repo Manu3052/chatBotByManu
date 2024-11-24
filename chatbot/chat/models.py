@@ -17,7 +17,7 @@ class Chat(models.Model):
         - service: The service used for the chat (e.g., 'telegram', 'wpp').
     """
     id = models.AutoField(primary_key=True)
-    chat_id = models.CharField(max_length=150, null=True, blank=True)
+    chat = models.CharField(max_length=150, null=True, blank=True)
     support_agent_id = models.ForeignKey(
         SupportAgent, on_delete=models.CASCADE, related_name='support_chats', null=True, blank=True
     )

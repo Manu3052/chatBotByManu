@@ -1,8 +1,11 @@
 from dataclasses import dataclass
+
 from rest_framework.exceptions import ValidationError
+
 from chat.models import Chat
 from chat.repositories.channel_repository import ChannelRepository
 from chat.services.abstract_channel_service import AbstractChannelService
+
 
 @dataclass
 class ChannelService(AbstractChannelService):

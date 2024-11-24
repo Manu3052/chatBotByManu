@@ -9,7 +9,7 @@ class TelegramInputSerializer(serializers.ModelSerializer):
     Converts Chat model instances to JSON format and vice versa.
     Fields:
         - id: Auto-generated unique identifier for the chat.
-        - chat_id: Identifier of the chat from the external service (if any).
+        - chat: Identifier of the chat from the external service (if any).
         - contact_id: ID of the contact participating in the chat.
         - service: The external service used (e.g., Telegram, Discord).
     """
@@ -17,7 +17,7 @@ class TelegramInputSerializer(serializers.ModelSerializer):
         model = Chat
         fields = [
             'id',
-            'chat_id',
+            'chat',
             'contact_id',
             'service'
         ]
@@ -38,6 +38,6 @@ class TelegramInputSerializer(serializers.ModelSerializer):
             - Sets the `service` field to '0' (defaulting to Telegram).
         """
         data = data['message']
-        data['chat_id']= data['from']['id']
+        data['chat']= data['from']['id']
         data['service']='0'
         return super().to_internal_value(data)
