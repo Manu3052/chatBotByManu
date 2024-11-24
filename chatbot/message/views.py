@@ -1,17 +1,18 @@
 import json
 
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import permissions, status
 from rest_framework.decorators import action
-from django.utils.decorators import method_decorator
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from message.utils.pagination import PaginatorConfig
 
 from message.models import Message
 from message.serializers.message_create_serializer import \
     MessageCreateSerializer
-from message.serializers.message_create_serializer import MessageCreateSerializer
+from message.serializers.message_list_serializer import MessageListSerializer
 from message.services.message_service import MessageService
 
 
@@ -31,6 +32,20 @@ class MessageViewSet(ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = MessageCreateSerializer
     queryset = Message.objects.all()
+    pagination_class= PaginatorConfig
+
+    
+    def get_serializer_class(self):
+        if self.action == "create":
+            return MessageListSerializer
+        elif self.action == "list":
+            return MessageListSerializer
+        elif self.action == "get_by_contact":
+            return MessageListSerializer
+        elif self.action == "get_by_support_agent":
+            return MessageListSerializer
+
+        return MessageListSerializer
 
     def __init__(self, message_service: MessageService = MessageService(), **kwargs):
         """
@@ -107,6 +122,56 @@ class MessageViewSet(ModelViewSet):
         messages = self.message_service.get_all()
         serializer = MessageCreateSerializer(messages, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=["get"], url_path=r"get_contact_id/(?P<contact>\d+)")
+    @method_decorator(csrf_exempt, name="dispatch")
+    def get_by_contact(self, request, contact: int) -> Response:
+        """
+        Retrieves messages for a specific contact.
+
+        Args:
+            request (Request): The HTTP request.
+            contact (int): The ID of the contact whose messages should be retrieved.
+
+        Returns:
+            Response: A paginated response containing the messages for the contact.
+        """
+        try:
+            messages = self.message_service.get_by_contact(contact)
+            serializer_class = self.get_serializer_class()
+            serializer = serializer_class(messages, many=True)
+            data_paginator = PaginatorConfig().paging_data(serializer.data)
+            return Response(data_paginator, status=status.HTTP_200_OK)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": "An error occurred while fetching messages for the contact."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=["get"], url_path=r"get_support_agent_id/(?P<support_agent>\d+)")
+    @method_decorator(csrf_exempt, name="dispatch")
+    def get_by_support_agent(self, request, support_agent: int) -> Response:
+        """
+        Retrieves messages for a specific support agent.
+
+        Args:
+            request (Request): The HTTP request.
+            support_agent (int): The ID of the support agent whose messages should be retrieved.
+
+        Returns:
+            Response: A paginated response containing the messages for the support agent.
+        """
+        try:
+            messages = self.message_service.get_by_support_agent(support_agent)
+            serializer_class = self.get_serializer_class()
+            serializer = serializer_class(messages, many=True)
+            data_paginator = PaginatorConfig().paging_data(serializer.data)
+            return Response(data_paginator, status=status.HTTP_200_OK)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": "An error occurred while fetching messages for the support agent."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @method_decorator(csrf_exempt, name="dispatch")
     def destroy(self, request, pk=None) -> Response:

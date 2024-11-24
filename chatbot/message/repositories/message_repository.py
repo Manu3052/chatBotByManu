@@ -1,7 +1,11 @@
 from dataclasses import dataclass
+from typing import List
+from django.contrib.contenttypes.models import ContentType
 
+from contact.models import Contact
 from message.models import Message
 from message.repositories.abstract_message_repository import AbstractMessageRepository
+from supportAgent.models import SupportAgent
 
 
 @dataclass
@@ -49,6 +53,44 @@ class MessageRepository(AbstractMessageRepository):
             setattr(message, key, value)
         message.chat.set(chat[0])
         message.save()
+
+    @staticmethod
+    def get_by_contact(contact: int) -> List['Message']:
+        """
+        Retrieves all messages sent by a specific contact.
+
+        Args:
+            contact (int): The ID of the contact whose messages should be retrieved.
+
+        Returns:
+            List[Message]: A list of messages sent by the contact.
+        """
+        contact_instance = Contact.objects.get(id=contact)
+        contact_content_type = ContentType.objects.get_for_model(contact_instance)
+        messages = Message.objects.filter(
+            sender_content_type=contact_content_type,
+            sender_object_id=contact_instance.id
+        ).values()
+        return messages
+
+    @staticmethod
+    def get_by_support_agent(support_agent: int) -> List['Message']:
+        """
+        Retrieves all messages sent by a specific support agent.
+
+        Args:
+            support_agent (int): The ID of the support agent whose messages should be retrieved.
+
+        Returns:
+            List[Message]: A list of messages sent by the support agent.
+        """
+        support_agent_instance = SupportAgent.objects.get(id=support_agent)        
+        support_agent_content_type = ContentType.objects.get_for_model(support_agent_instance)
+        messages = Message.objects.filter(
+            sender_content_type=support_agent_content_type,
+            sender_object_id=support_agent_instance.id
+        )
+        return messages
 
     @staticmethod
     def delete(message_id: int) -> None:

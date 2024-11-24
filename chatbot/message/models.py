@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 from chat.models import Chat
 
@@ -10,14 +12,14 @@ class Message(models.Model):
     
     Attributes:
         id (int): The unique identifier for the message (Primary Key).
-        chat (ForeignKey): A reference to the chat this message belongs to (Foreign Key to Chat model, with cascade deletion).
+        chat_id(ForeignKey): A reference to the chat this message belongs to (Foreign Key to Chat model, with cascade deletion).
         sender_type (int): Indicates the sender of the message (1 = USER, 2 = BOT, 3 = SUPPORT_AGENT).
         message_content (str): The content of the message (cannot be null).
         created_at (datetime): The date and time when the message was created (default: current timestamp).
         updated_at (datetime): The date and time when the message was last updated (optional, for edited messages).
     """
     
-    chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages', help_text="The chat to which this message belongs.")
+    chat_id = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name='messages', help_text="The chat to which this message belongs.")
     sender_type = models.IntegerField(
         choices=[(1, 'User'), (2, 'Bot'), (3, 'Support Agent')],
         default=1,
@@ -25,8 +27,9 @@ class Message(models.Model):
     )
     message_content = models.TextField(help_text="The content of the message (cannot be null).")
     created_at =models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(auto_now=True, null=True, blank=True, help_text="Timestamp when the message was last updated (optional).")
-
+    sender_content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, null=True, blank=False)
+    sender_object_id = models.PositiveIntegerField(null=True, blank=False)
+    sender = GenericForeignKey('sender_content_type', 'sender_object_id')
     class Meta:
         verbose_name = "Message"
         verbose_name_plural = "Messages"

@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+from contact.models import Contact
 from message.models import Message
+from supportAgent.models import SupportAgent
 
 
 class AbstractMessageService(ABC):
@@ -38,12 +40,30 @@ class AbstractMessageService(ABC):
         pass
 
     @abstractmethod
-    def delete(self, message_id: int) -> None:
+    def get_by_support_agent(self, support_agent: int) -> List['Message']:
         """
-        Method to delete a message by its ID.
+        Retrieves a list of records associated with a specific support agent.
 
         Args:
-            message_id (int): The unique identifier of the message to delete.
+            request: The request object containing the current context information.
+            support_agent (int): The ID of the support agent.
+
+        Returns:
+            List[SupportAgent]: A list of SupportAgent objects linked to the provided ID.
+        """
+        pass
+
+    @abstractmethod
+    def get_by_contact(self, contact: int) -> List['Message']:
+        """
+        Retrieves a list of records associated with a specific contact.
+
+        Args:
+            request: The request object containing the current context information.
+            contact (int): The ID of the contact.
+
+        Returns:
+            List[Contact]: A list of Contact objects linked to the provided ID.
         """
         pass
 
@@ -56,3 +76,13 @@ class AbstractMessageService(ABC):
             List[Message]: A list of all message instances.
         """
         pass
+    @abstractmethod
+    def delete(self, message_id: int) -> None:
+        """
+        Method to delete a message by its ID.
+
+        Args:
+            message_id (int): The unique identifier of the message to delete.
+        """
+        pass
+

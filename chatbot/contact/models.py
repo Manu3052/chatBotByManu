@@ -14,8 +14,8 @@ class Contact(models.Model):
     id = models.AutoField(primary_key=True)
     cpf = models.CharField(max_length=11, blank=True, null=True)
     telephone = models.CharField(max_length=15, blank=True, null=True)
-    email = models.EmailField(unique=True)
-    name = models.CharField(max_length=255)
+    email = models.EmailField(unique=True, blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         """
