@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from chat.models import Chat
 
 from chat.serializers.chat_serializer import ChatSerializer
 from chat.serializers.telegram_input_serializer import TelegramInputSerializer
@@ -33,7 +34,7 @@ class ChannelViewSet(ModelViewSet):
     
     permission_classes = [permissions.AllowAny]
     serializer_class = ChatSerializer
-    queryset = None
+    queryset = Chat.objects.all()
 
     def __init__(self, channel_service: AbstractChannelService = ChannelService(), message_service: AbstractMessageService = MessageService(), **kwargs):
         """
