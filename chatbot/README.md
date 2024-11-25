@@ -41,25 +41,25 @@ updated_at: Data e hora de atualização da mensagem (opcional, caso a mensagem 
 ## Desenvolvimento da Aplicação
 
 ### Camada de Abstração
-- [ ] Implementar camada para facilitar a adição/substituição de canais.
+- [ x] Implementar camada para facilitar a adição/substituição de canais.
 
 ### Integração de Canais
-- [ ] Integrar com o Telegram (canal real).
+- [x ] Integrar com o Telegram (canal real).
 - [ ] Implementar um canal mock (para testes).
 
 ### Persistência de Dados
-- [ ] Criar modelo para **Contato**.
-- [ ] Criar modelo para **Canal**.
-- [ ] Criar modelo para **Atendente Humano**.
-- [ ] Criar modelo para **Mensagem**.
+- [ x] Criar modelo para **Contato**.
+- [ x] Criar modelo para **Canal**.
+- [x ] Criar modelo para **Atendente Humano**.
+- [ x] Criar modelo para **Mensagem**.
 
 ### APIs REST
-- [ ] API para configurar canais de comunicação.
+- [x ] API para configurar canais de comunicação.
 - [ ] API para envio de mensagens (atendente → contato).
-- [ ] API Webhook para recebimento de mensagens (canal → sistema).
-- [ ] API para listar mensagens:
-  - [ ] Implementar paginação.
-  - [ ] Adicionar filtros por contato e atendente.
+- [x ] API Webhook para recebimento de mensagens (canal → sistema).Configurar ot para resposta
+- [ x] API para listar mensagens:
+  - [x ] Implementar paginação.
+  - [ x] Adicionar filtros por contato e atendente.
 
 ### Testes Unitários
 - [ ] Criar testes unitários para os modelos.
@@ -71,7 +71,7 @@ updated_at: Data e hora de atualização da mensagem (opcional, caso a mensagem 
 - [ ] Configurar cache para perguntas frequentes.
 - [ ] Criar arquivos **Dockerfile** e **docker-compose**.
 - [ ] Implementar rotina com **Celery** para apagar mensagens antigas.
-- [ ] Integrar com uma plataforma real de atendimento humano.
+- [x ] Integrar com uma plataforma real de atendimento humano.
 - [ ] Fazer deploy da aplicação (ex.: PythonAnywhere).
 
 ## Entrega

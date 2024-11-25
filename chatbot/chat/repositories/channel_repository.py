@@ -26,15 +26,7 @@ class ChannelRepository(AbstractChannelRepository):
             - Chat: The created Chat instance.
         """
         data_copy = data
-        if 'support_agent_id' in data:
-            support_agent_id = data_copy.pop("support_agent_id")
-        if 'contact_id' in data:
-            contact_id = data_copy.pop("contact_id")
         chat = Chat.objects.create(**data_copy)
-        if 'support_agent_id' in data:
-            chat.support_agent_id.set(support_agent_id[0])
-        if 'contact_id' in data:
-            chat.contact_id.set(contact_id[0])
         chat.save()
         return chat
     
@@ -79,4 +71,15 @@ class ChannelRepository(AbstractChannelRepository):
         """
         chats = Chat.objects.all()
         return chats
+    
+    @staticmethod
+    def get_by_chat_id(chat_id: str) -> Chat:
+        """
+        Retrieves a Chat instance.
+
+        Returns:
+            - QuerySet: A Chat instances.
+        """
+        chat = Chat.objects.filter(chat=chat_id).first()
+        return chat
 

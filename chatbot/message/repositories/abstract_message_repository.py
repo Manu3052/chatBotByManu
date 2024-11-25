@@ -69,6 +69,23 @@ class AbstractMessageRepository(ABC):
             NotImplementedError: If the method is not implemented in the subclass.
         """
         pass
+
+    @abstractmethod
+    def get_by_id(message: int) -> Message:
+        """
+        Retrieves a message by its unique ID.
+
+        Args:
+            message_id (int): The ID of the message to retrieve.
+
+        Returns:
+            Message: The message corresponding to the provided ID.
+
+        Raises:
+            NotFoundError: If the message with the given ID is not found.
+        """
+        pass
+
     @abstractmethod
     def delete(message_id: int)-> None:
         """

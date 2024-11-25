@@ -48,6 +48,17 @@ class MessageService(AbstractMessageService):
         """
         updated_message = self.message_repository.update(data, message)
         return updated_message
+
+
+    def get_by_id(self, message: int) -> Message:
+        message = self.message_repository.get_by_id(message)
+        if not isinstance(message, Message):
+            raise ValidationError(
+                detail="Message not found.",
+                code=status.HTTP_404_NOT_FOUND
+            )
+        return message
+
     
     def get_by_support_agent(self, support_agent: int) -> List['Message']:
         """

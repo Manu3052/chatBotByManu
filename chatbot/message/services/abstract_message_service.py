@@ -1,10 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from contact.models import Contact
 from message.models import Message
-from supportAgent.models import SupportAgent
-
 
 class AbstractMessageService(ABC):
     """
@@ -33,6 +30,19 @@ class AbstractMessageService(ABC):
         Args:
             data (dict): Data to update the message.
             message (Message): The message instance to be updated.
+
+        Returns:
+            Message: The updated message instance.
+        """
+        pass
+    
+    @abstractmethod
+    def get_by_id(self, message: int) -> Message:
+        """
+        Method to update an existing message.
+
+        Args:
+            message (int): Message Id
 
         Returns:
             Message: The updated message instance.

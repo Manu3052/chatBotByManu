@@ -91,6 +91,20 @@ class MessageRepository(AbstractMessageRepository):
             sender_object_id=support_agent_instance.id
         )
         return messages
+    
+    @staticmethod
+    def get_by_id(message: int) -> Message:
+        """
+        Retrieve a message by its id.
+
+        Args:
+            message (int): The ID of the support agent whose messages should be retrieved.
+
+        Returns:
+            Message: A instance of Menssage.
+        """
+        message = Message.objects.filter(id=message).first()      
+        return message
 
     @staticmethod
     def delete(message_id: int) -> None:

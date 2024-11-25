@@ -92,21 +92,17 @@ class MessageViewSet(ModelViewSet):
             Response: The response with the status of the operation.
         """
         try:
-            message = Message.objects.get(id=pk)
+            message_id = Message.objects.get(id=pk)
             data = json.loads(request.body)
-            updated_message = self.message_service.update(data, message)
-            serializer = MessageCreateSerializer(updated_message)
-            
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        
-        except Message.DoesNotExist:
-            return Response({"error": "Message not found."}, status=status.HTTP_404_NOT_FOUND)
-        
-        except (json.JSONDecodeError, KeyError) as e:
-            return Response({"error": f"Invalid data format: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
-        
+            message_instance = self.message_service.get_by_id(message_id)
+            self.message_service.update(data, message_instance)
+            return Response("detail: The message was updated with success", status=status.HTTP_200_OK)
         except ValidationError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": "An error occurred while updating messages."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 
     @method_decorator(csrf_exempt, name="dispatch")
     def list(self, request) -> Response:
@@ -119,9 +115,17 @@ class MessageViewSet(ModelViewSet):
         Returns:
             Response: The response containing the list of messages.
         """
-        messages = self.message_service.get_all()
-        serializer = MessageCreateSerializer(messages, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            messages = self.message_service.get_all()
+            serializer_class = self.get_serializer_class()
+            serializer = serializer_class(messages, many=True)
+            data_paginator = PaginatorConfig().paging_data(serializer.data)
+            return Response(data_paginator, status=status.HTTP_200_OK)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": "An error occurred while fetching messages."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
     @action(detail=False, methods=["get"], url_path=r"get_contact_id/(?P<contact>\d+)")
     @method_decorator(csrf_exempt, name="dispatch")

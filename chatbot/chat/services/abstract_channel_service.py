@@ -54,3 +54,13 @@ class AbstractChannelService(ABC):
             list[Chat]: A list of all chat instances.
         """
         pass
+
+    @abstractmethod
+    def get_by_chat_id(self) -> Chat:
+        """
+        Abstract method to retrieve a chats.
+        
+        Returns:
+            Chat: Retrieves a chat instance.
+        """
+        pass

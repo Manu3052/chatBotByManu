@@ -28,6 +28,11 @@ class ChannelService(AbstractChannelService):
         Returns:
             Chat: A instância do chat criado.
         """
+        chat_id = data.get('chat')
+        if chat_id:
+            channel_existing = self.channel_repository.get_by_chat_id(chat_id)
+        if isinstance(channel_existing, Chat):
+            return channel_existing
         return self.channel_repository.create(data)
     
     def update(self, data: dict, chat: Chat) -> None:
@@ -63,3 +68,9 @@ class ChannelService(AbstractChannelService):
             list[Chat]: Uma lista contendo todas as instâncias de chat.
         """
         return self.channel_repository.get_all()
+
+    def get_by_chat_id(self, chat_id: int) -> Chat:
+        chat = self.channel_repository.get_by_chat_id(chat_id)
+        if chat:
+            raise ValidationError(detail="There is no chat with this id")
+        return chat
