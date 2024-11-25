@@ -40,6 +40,8 @@ class MessageCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"chat": "O ID do chat é obrigatório."})
         if sender_type == 1:
             contact = Contact.objects.create(name=message_content)
+        if sender_type == 2:
+            contact = Contact.objects.create(name=message_content)
 
         message_data = {
             "sender": contact,

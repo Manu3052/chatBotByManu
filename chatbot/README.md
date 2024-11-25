@@ -1,3 +1,7 @@
+O código abaixo está incompleto devido a problemas pessoais especificados através do chat de Mariana, peço desculpas pelo inconveniente.
+
+
+
 Tabela Atendentes
 id: Identificador único do atendente (Primary Key).
 first_name: Primeiro nome do atendente (não nulo).

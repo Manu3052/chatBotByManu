@@ -110,6 +110,9 @@ class ChannelViewSet(ModelViewSet):
                 support_agent = request.data['support_agent']
                 support_agent = self.support_agent_service.get_by_id(support_agent)
                 answer = request.data['answer']
+                message_serializer_class = MessageCreateSerializer
+                message_serializer = message_serializer_class(data=request.data)
+                message_serializer.is_valid(raise_exception=True)
                 self.message_service.create()
                 telegram_answer = TelegramProvider()
                 telegram_answer.reply(chat_id, answer)
